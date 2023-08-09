@@ -1,0 +1,20 @@
+#declare bq_views_academy_prod and bq_views_intensive_prod_derived_tables_views as sources
+
+version: 2
+
+sources:
+  - name: bq_views_academy_prod
+    database: "{{ var('bigquery_project_id') }}"
+    tables:
+      - name: pre_team_meets_and_other_calls_manual_tracking_data
+      - name: pre_team_non_working_dates_config
+      - name: ccbp_4_0_academy_pre_level_hierarchy_access_emails_config
+
+  - name: bq_views_academy_prod
+    database: "{{ var('bigquery_project_id') }}"
+    tables:
+      - name: ccbp_intensive_utm_source_corresponding_intent_config
+      - name: ccbp_intensive_region_wise_access_emails_config
+      - name: intensive_leads_corresponding_campaign_details_config
+      - name: ccbp_intensive_utm_campaign_corresponding_attribution_channels_config
+      - name: ccbp_intensive_invite_and_earn_users_category_config
