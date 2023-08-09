@@ -23,3 +23,5 @@ renamed as (
 )
 
 select * from renamed
+
+limit 1000
