@@ -1,3 +1,4 @@
+{% set relation = api.Relation.create(schema='snowplow', identifier='events') %}
 with source as (
 
     {#-
@@ -19,4 +20,5 @@ renamed as (
 
 )
 
-select * from renamed
+select * from renamed {{relation.database}}
+
