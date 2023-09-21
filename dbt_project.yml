@@ -23,4 +23,11 @@ models:
   jaffle_shop:
       materialized: table
       staging:
-        materialized: view
+        +schema: staging_test
+        +materialized: view
+        +labels:
+          contains_pii: test
+
+vars:
+  bigquery_project_id: "`project-on-dbt-379106.dim_customers.raw_customers`"
+
