@@ -22,7 +22,7 @@
     from `project-on-dbt-379106`.`test_dev`.`form_responses`
     where form_id = {{ i }}
 {% endset %}
-print({{query}})
+
     {% do run_query(query) %}
 {% endfor %}
 
