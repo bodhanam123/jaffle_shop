@@ -6,13 +6,15 @@
 
         {%- set target_relation = this %}
         {% set upload_as=config.get('upload_as') %}
+        {% set schema=config.get('schema') %}
+
         {% set options %}
 
         OPTIONS(
         format = "GOOGLE_SHEETS",
         sheet_range = "{{config.get('sheet_range')}}",
         uris =  ["{{config.get('uri')}}"],
-        skip_leading_rows= 1
+        skip_leading_rows= {{config.get('skip_leading_rows')}}
         );
     
         {% endset %}
@@ -26,9 +28,9 @@
     -- ifelse block to call a macro based on upload_as argument
 
         {% if upload_as == "external_table" %}
-            {%- set build_sql = create_external_table(target_relation,options) -%}
+            {%- set build_sql = create_external_table(target_relation,options,model) -%}
         {% elif upload_as == "table" %}
-            {%- set build_sql = create_table(target_relation,options,temp_table) -%}
+            {%- set build_sql = create_table(target_relation,options,temp_table,model) -%}
         {% else %}
             {%- set build_sql = "" -%}
         {% endif %}
@@ -58,10 +60,10 @@
 
 -- macro for external table creation
 
-    {% macro create_external_table(target_relation,options) %}
+    {% macro create_external_table(target_relation,options,model) %}
 
         create or replace external table {{target_relation}}
-    
+        {{model.compiled_sql}}
         {{options}}
 
     {% endmacro %}
@@ -69,14 +71,12 @@
 
 -- macro for creating external table as table
 
-    {% macro create_table(target_relation,options,temp_table) %}
+    {% macro create_table(target_relation,options,temp_table,model) %}
 
       create or replace external table {{temp_table}}
-    
+      {{model.compiled_sql}}
       {{options}}
-
       create or replace table {{target_relation}} as (select * from {{temp_table}});
-    
       drop table {{temp_table }} ;
     
       
