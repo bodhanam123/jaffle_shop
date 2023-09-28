@@ -24,3 +24,7 @@ models:
       materialized: table
       staging:
         materialized: view
+
+vars:
+  prod_dataset_otg: "dbt_bodhanam123"
+  beta_dataset_otg: "dbt_pbodhanam"

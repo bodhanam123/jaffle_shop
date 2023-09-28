@@ -1,0 +1,8 @@
+version: 2
+
+sources:
+  - name: {{}}
+    database: 
+    tables:
+      - name: ib_users_userlogindevicedetails
+      - name: django_swagger_utils_lastaccess
